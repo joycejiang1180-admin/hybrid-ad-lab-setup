@@ -1,0 +1,4 @@
+doc/placeholder.txt
+scripts/placeholder.txt
+screenshots/placeholder.txt
+resources/placeholder.txt
