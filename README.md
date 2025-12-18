@@ -36,6 +36,6 @@ The goal is to practice and demonstrate skills in on-premises Active Directory m
 - Install and configure Entra ID Connect on the Domain Controller (or a separate server)
 - Configure synchronization between on-premises AD and Entra ID
 
-  ### 5. Test and Validate
+### 5. Test and Validate
   - Test user synchronization
   - Test password hash synchronization and/or pass-through authentication
