@@ -1,68 +1,23 @@
-# 1. Environment Setup
+# Troubleshooting Summary
 
-## Objective
-Setup the virtualization environment for the hybrid AD lab
+## Issues Encountered & Resolved
+| Date | Issue | Root Cause | Resolution | Status |
+|------|-------|------------|------------|--------|
+| Dec 19, 2025 | VirtualBox VM failed to start | Hyper-V conflict | Disabled Hyper-V via `bcdedit` | ✅ Resolved |
+| Dec 19, 2025 | Black screen on VM boot | UEFI/BIOS mismatch | Changed chipset to ICH9, disabled UEFI | ✅ Resolved |
+| Dec 19, 2025 | "Cannot find License Terms" | Corrupted ISO (4.69GB vs 4.70GB) | Re-downloading fresh ISO | ⏳ In Progress |
 
-## Troubleshooting Log
-## Issue 1: VirtualBox VM Failed to Start
-**Date:** [Dec 19, 2025]
-**VM:** DC01
-**Root Cause:** Hyper-V conflict on Windows host. VirtualBox cannot access hardware virtualization when Hyper-V is enabled.
-**Steps Taken to Resolve:**
-1. **Command Prompt (Admin):** `bcdedit /set hypervisorlaunchtype off`
-2. **Restarted computer**
-3. **Verified resolution:** VM started successfully after Hyper-V disable
-**Screenshot of Error:**
-![VirtualBox Hyper-V Conflict Error](/screenshots/virtualbox-hyperv-error.png)
-![]()
+## Lesson Learned
+1. **Hypervisor Compatibility:** Enterprise environments often mix virtualization platforms
+2. **Firmware Awareness:** UEFI vs BIOS knowledge is critical for server deployment
+3. **Media Validation:** Always verify ISO integrity before deployment
+4. **Systematic Troubleshooting:** Document each issue, cause, and resolution
 
-**Lesson Learned:** 
-- Multiple hypervisors cannot coexist on Windows
-- Hyper-V takes priority and must be disabled for VirtualBox
-
-## Issue 2: Black screen on VM startup after Hyper-V disable
-**Date:** [Dec 19, 2025]
-**VM:** DC01
-## Root Cause Identified: UEFI/BIOS Mismatch
-**Configuration Found:**
-- UEFI: Enabled ❌ (Incorrect)
-- Chipset: PIIX3 ❌ (Should be ICH9 for Windows Server)
-- Boot Mode: UEFI vs BIOS mismatch
-
-**Fix Applied:**
-1. Changed Chipset from PIIX3 to ICH9
-2. Disabled UEFI option
-3. Disabled Secure Boot
-4. Set pointing device to PS/2 Mouse
-5. Ensured I/O APIC enabled
-
-**Result:** VM should now boot properly from ISO
-
-**Screenshot of Error:**
-![]()
-![]()
-
-
-**Lesson Learned:** 
-- **UEFI vs BIOS** boot compatibility is critical for VM deployment
-- Windows Server 2022 requires ICH9 chipset in VirtualBox
-
-## Issue 3: Cannot find Microsoft Software License Terms
-**Date:** [Dec 19, 2025]
-**VM:** DC01
-## Root Cause Confirmed: Corrupted ISO File
-**Evidence:** ISO file size is 4.69GB instead of expected 4.70GB
-**Missing:** Approximately 10MB of data, including critical license terms files
-**Impact:** Installation cannot proceed without complete media
-
-**Screenshot of Error:**
-![]()
-![]()
-
-**Lesson Learned:** 
-- Always verify ISO integrity before deployment
-- Use checksums/hashes when available
-- Network interruptions during download can corrupt large files
+## ISO Integrity Verification
+**File:** `WinSrv2022.iso`
+**SHA256 Hash:** `3e4fa6d8507b554856fc9ca6079cc402df11a8b79344871669f0251535255325`
+**Status:** Corrupted (10MB missing from expected 4.70GB)
+**Action:** Fresh download in progress
   
 ## Notes
 *This document will be updated as I progress*
